@@ -1,0 +1,143 @@
+<script type="text/javascript">
+    RED.nodes.registerType('caldav', {
+        category: 'dav',
+        color: '#0082c9',
+        paletteLabel: 'CalDAV',
+		defaults: {
+            nname: {value: ''},
+            server: {type: 'dav-credentials', required: true},
+            calendar: {value: '', required: false},
+            pastWeeks: { type: 'num', value: 0, required: true},
+            futureWeeks: { type: 'num', default: 4, required: true }
+        },
+        inputs: 1,
+        outputs: 1,
+        outputLabels: ['stdout'],
+        icon: 'nextcloud.png',
+        label: function() {
+            return this.nname || 'CalDAV'
+        }
+    })
+</script>
+
+<script type="text/x-red" data-template-name="caldav">
+    <div class="form-row">
+        <label for="node-input-nname"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-nname" placeholder="Name"  style="width: 70%">
+    </div>
+	<div class="form-row">
+    	<label for="node-input-server"><i class="fa fa-server"></i> Server</label>
+    	<input type="text" id="node-input-server">
+	</div>
+	<div class="form-row">
+        <label for="node-input-calendar"><i class="fa fa-calendar"></i> Calendar</label>
+        <input type="text" id="node-input-calendar">
+    </div>
+    <div class="form-row">
+        <label for="node-input-pastWeeks"><i class="fa fa-check-square"></i> Past weeks to sync</label>
+        <span class="ui-spinner ui-widget ui-widget-content ui-corner-all"><input type="number" id="node-input-pastWeeks"></span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-futureWeeks"><i class="fa fa-random"></i> Upcoming weeks to sync</label>
+        <span class="ui-spinner ui-widget ui-widget-content ui-corner-all"><input type="number" id="node-input-futureWeeks"></span>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="caldav">
+	<p>Connects to a Nextcloud server and downloads calendar entries (ics)</p>
+
+	<h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">any</span>
+        </dt>
+        <dd> Incoming message triggers download of calendar items. Any payload is possible. </dd>
+        <dt class="optional">calendar <span class="property-type">string</span></dt>
+        <dd> Calendar can be specified on incoming message or in nodes properties (expects displayname
+        of calendar - the name of the calendar as shown in nextcloud calendar app). Downloads
+        calendar items from all calendars if not set.</dd>
+    </dl>
+
+	<h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">Object</span>
+        </dt>
+        <dd> Outputs one message for each calendar. Output payload is an object with two keys:</dd>
+        <dt class="optional">name <span class="property-type">string</span></dt>
+        <dd> The name of the calendar</dd>
+        <dt class="optional">data <span class="property-type">Array of objects</span></dt>
+        <dd> Each calendar entry is an ics parsed to a JSON object</dd>
+    </dl>
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('carddav', {
+        category: 'dav',
+        color: '#0082c9',
+        paletteLabel: 'CardDAV',
+        defaults: {
+            rname: {value: ''},
+            server: {type: 'dav-credentials', required: true},
+            addressBook: {value: '', required: false}
+        },
+        inputs: 1,
+        outputs: 1,
+        outputLabels: ['stdout'],
+        icon: 'nextcloud.png',
+        label: function() {
+            return this.rname || 'CardDAV'
+        }
+    })
+</script>
+
+<script type="text/x-red" data-template-name="carddav">
+    <div class="form-row">
+        <label for="node-input-rname"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-rname" placeholder="Name">
+    </div>
+	<div class="form-row">
+    	<label for="node-input-server"><i class="fa fa-server"></i> Server</label>
+    	<input type="text" id="node-input-server">
+	</div>
+	<div class="form-row">
+        <label for="node-input-addressBook"><i class="fa fa-address-book"></i> Address Book</label>
+        <input type="text" id="node-input-addressBook">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="carddav">
+	<p>Connects to a Nextcloud server and downloads addressbook entries (vcf)</p>
+
+	<h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">any</span>
+        </dt>
+        <dd> Incoming message triggers download of addressbook items. Any payload is possible. </dd>
+        <dt class="optional">calendar <span class="property-type">string</span></dt>
+        <dd> Adressbook can be specified on incoming message or in nodes properties (expects displayname
+        of addressbook - the name of the addressbook as shown in nextcloud contacts app). Downloads
+        addressbook items from all addressbooks if not set.</dd>
+    </dl>
+
+	<h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">Object</span>
+        </dt>
+        <dd> Outputs one message for each addressbook. Output payload is an object with two keys:</dd>
+        <dt class="optional">name <span class="property-type">string</span></dt>
+        <dd> The name of the addressbook</dd>
+        <dt class="optional">data <span class="property-type">Array of objects</span></dt>
+        <dd> Each addressbook entry is an vcf parsed to a JSON object</dd>
+    </dl>
+</script>
+
+
+
+
+
+

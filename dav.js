@@ -6,19 +6,7 @@ module.exports = function (RED) {
   const moment = require('moment')
   const https = require('https')
 
-  function NextcloudConfigNode (config) {
-    RED.nodes.createNode(this, config)
-    this.address = config.address
-    this.insecure = n.insecure
-  }
-  RED.nodes.registerType('nextcloud-credentials', NextcloudConfigNode, {
-    credentials: {
-      user: { type: 'text' },
-      pass: { type: 'password' }
-    }
-  })
-
-  function NextcloudCalDav (config) {
+  function CalDav (config) {
     RED.nodes.createNode(this, config)
     this.server = RED.nodes.getNode(config.server)
     this.calendar = config.calendar
@@ -125,9 +113,9 @@ module.exports = function (RED) {
       }
     }
   }
-  RED.nodes.registerType('nextcloud-caldav', NextcloudCalDav)
+  RED.nodes.registerType('caldav', CalDav)
 
-  function NextcloudCardDav (config) {
+  function CardDav (config) {
     RED.nodes.createNode(this, config)
     this.server = RED.nodes.getNode(config.server)
     this.addressBook = config.addressBook
@@ -180,116 +168,11 @@ module.exports = function (RED) {
         })
     })
   }
-  RED.nodes.registerType('nextcloud-carddav', NextcloudCardDav)
+  RED.nodes.registerType('carddav', CardDav)
 
-  function NextcloudWebDavList (config) {
-    RED.nodes.createNode(this, config)
-    this.server = RED.nodes.getNode(config.server)
-    this.directory = config.directory
-    const node = this
 
-    node.on('input', (msg) => {
-      const webDavUri = node.server.address + '/remote.php/webdav/'
-      const client = webdav(webDavUri, node.server.credentials.user, node.server.credentials.pass)
-      let directory = ''
-      if (msg.directory) {
-        directory = '/' + msg.directory
-      } else if (node.directory && node.directory.length) {
-        directory = '/' + node.directory
-      }
-      directory = directory.replace('//', '/')
 
-      // check option for self signed certs
-      const option = {}
-      if (node.server.insecure) {
-        option.agent = new https.Agent({ rejectUnauthorized: false })
-      }
-      client.getDirectoryContents(directory, option)
-        .then(function (contents) {
-          node.send({ 'payload': contents })
-        }, function (error) {
-          node.error('Nextcloud:WebDAV -> get directory content went wrong.' + JSON.stringify(error))
-        })
-    })
-  }
-  RED.nodes.registerType('nextcloud-webdav-list', NextcloudWebDavList)
 
-  function NextcloudWebDavOut (config) {
-    RED.nodes.createNode(this, config)
-    this.server = RED.nodes.getNode(config.server)
-    this.filename = config.filename
-    const node = this
 
-    node.on('input', (msg) => {
-      const webDavUri = node.server.address + '/remote.php/webdav/'
-      const client = webdav(webDavUri, node.server.credentials.user, node.server.credentials.pass)
-      let filename = ''
-      if (msg.filename) {
-        filename = '/' + msg.filename
-      } else if (node.filename && node.filename.length) {
-        filename = '/' + node.filename
-      } else {
-        node.error('Nextcloud:WebDAV -> no filename specified.')
-        return
-      }
-      filename = filename.replace('//', '/')
-
-      // check option for self signed certs
-      const option = {}
-      if (node.server.insecure) {
-        option.agent = new https.Agent({ rejectUnauthorized: false })
-      }
-      client.getFileContents(filename, option)
-        .then(function (contents) {
-          node.send({ 'payload': contents })
-        }, function (error) {
-          node.error('Nextcloud:WebDAV -> get file went wrong.' + JSON.stringify(error))
-        })
-    })
-  }
-  RED.nodes.registerType('nextcloud-webdav-out', NextcloudWebDavOut)
-
-  function NextcloudWebDavIn (config) {
-    RED.nodes.createNode(this, config)
-    this.server = RED.nodes.getNode(config.server)
-    this.directory = config.directory
-    this.filename = config.filename
-    const node = this
-
-    node.on('input', (msg) => {
-      // Read upload file
-      let filename = node.filename
-      if (msg.filename) {
-        filename = msg.filename
-      }
-      const name = filename.substr((filename.lastIndexOf('/') + 1), filename.length)
-      const file = fs.readFileSync(filename)
-      // Set upload directory
-      let directory = '/'
-      if (msg.directory) {
-        directory += msg.directory + '/'
-      } else if (node.directory && node.directory.length) {
-        directory += node.directory + '/'
-      }
-      directory = directory.replace('//', '/')
-
-      const webDavUri = node.server.address + '/remote.php/webdav/'
-      const client = webdav(webDavUri, node.server.credentials.user, node.server.credentials.pass)
-
-      // check option for self signed certs
-      const option = {}
-      if (node.server.insecure) {
-        option.agent = new https.Agent({ rejectUnauthorized: false })
-      }
-
-      client.putFileContents(directory + name, file, { format: 'binary' }, option)
-        .then(function (contents) {
-          console.log(contents)
-          node.send({ 'payload': JSON.parse(contents) })
-        }, function () {
-          node.error('Nextcloud:WebDAV -> send file went wrong.')
-        })
-    })
-  }
-  RED.nodes.registerType('nextcloud-webdav-in', NextcloudWebDavIn)
+  
 }

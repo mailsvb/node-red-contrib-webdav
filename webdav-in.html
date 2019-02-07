@@ -1,0 +1,87 @@
+<script type="text/javascript">
+  RED.nodes.registerType('webdav-in', {
+    category: 'storage',
+    color: '#0082c9',
+    paletteLabel: 'WebDAV in',
+    defaults: {
+      uname: {value: ''},
+      server: {type: 'dav-credentials', required: true},
+      filename: {value: '', required: false},
+      overwrite: {value: '', required: false},
+      format: {value: 'binary', required: true},
+      directory: {value: '', required: false}
+    },
+    inputs: 1,
+    outputs: 1,
+    outputLabels: ['stdout'],
+    icon: 'nextcloud.png',
+    label: function() {
+      return this.uname || 'WebDAV In'
+    }
+  })
+</script>
+
+<script type="text/x-red" data-template-name="webdav-in">
+    <div class="form-row">
+        <label for="node-input-uname"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-uname" placeholder="Name">
+    </div>
+	<div class="form-row">
+    	<label for="node-input-server"><i class="fa fa-server"></i> Server</label>
+    	<input type="text" id="node-input-server">
+	</div>
+	<div class="form-row">
+        <label for="node-input-filename"><i class="fa fa-file"></i> Filename</label>
+        <input type="text" id="node-input-filename">
+    </div>
+    <div class="form-row">
+        <label for="node-input-overwrite"><i class="fa fa-server"></i> Overwrite</label>
+        <input type="checkbox" value="1" id="node-input-overwrite"
+        	style="display: inline-block; width: auto; vertical-align: top">
+        	<span style="width: 70%">Overwrite file if exist</span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-format"><i class="fa fa-sitemap"></i> Format</label>
+        <select type="text", id="node-input-format">
+            <option value="binary">Binary</option>
+            <option value="text">Text</option>
+        </select>
+    </div>
+	<div class="form-row">
+        <label for="node-input-directory"><i class="fa fa-sitemap"></i> Directory</label>
+        <input type="text" id="node-input-directory">
+    </div>
+    <div class="form-tips"><b>Tip:</b> The filename should be an absolute path, otherwise it will
+    	be relative to the working directory of the Node-RED process.</div>
+</script>
+
+<script type="text/x-red" data-help-name="webdav-in">
+	<p>Connects to a Webdav server and uploads a file to a given directory</p>
+
+	<h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">any</span>
+        </dt>
+        <dd> Incoming message triggers receiving a list containing a directory content. Any payload
+        is possible. </dd>
+        <dt class="optional">filename <span class="property-type">string</span></dt>
+        <dd> The filename should be an absolute path, otherwise it will be relative to the working
+        directory of the Node-RED process.</dd>
+        <dt class="optional">directory <span class="property-type">string</span></dt>
+        <dd> A directory can be specified on incoming message or in nodes properties. Uploads the
+        file to the users root directory if not set.</dd>
+    </dl>
+
+	<h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">Object</span>
+        </dt>
+        <dd> Output payload is an object </dd>
+        <dt class="optional">size <span class="property-type">number</span></dt>
+        <dd> Should be 0 in case of success </dd>
+		<dt class="optional">timeout <span class="property-type">number</span></dt>
+        <dd> Should be 0 in case of success</dd>
+    </dl>
+</script>
