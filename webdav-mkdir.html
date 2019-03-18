@@ -1,11 +1,11 @@
 <script type="text/javascript">
-  RED.nodes.registerType('webdav-directory', {
+  RED.nodes.registerType('webdav-mkdir', {
     category: 'storage',
     color: '#0082c9',
-    paletteLabel: 'WebDAV create directory',
+    paletteLabel: 'mkdir',
     defaults: {
       wname: {value: ''},
-      server: {type: 'dav-credentials', required: true},
+      server: {type: 'webdav-credentials', required: true},
       directory: {value: '', required: false}
     },
     inputs: 1,
@@ -13,12 +13,12 @@
     outputLabels: ['stdout'],
     icon: 'nextcloud.png',
     label: function() {
-      return this.wname || 'WebDAV create directory'
+      return this.wname || 'mkdir'
     }
   })
 </script>
 
-<script type="text/x-red" data-template-name="webdav-directory">
+<script type="text/x-red" data-template-name="webdav-mkdir">
     <div class="form-row">
         <label for="node-input-wname"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-wname" placeholder="Name">
@@ -33,8 +33,8 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="webdav-directory">
-	<p>Connects to a Nextcloud server and lists directory content of a given path)</p>
+<script type="text/x-red" data-help-name="webdav-mkdir">
+	<p>Connects to a WebDAV server and lists directory content of a given path)</p>
 
 	<h3>Inputs</h3>
     <dl class="message-properties">

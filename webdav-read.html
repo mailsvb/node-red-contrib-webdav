@@ -1,11 +1,11 @@
 <script type="text/javascript">
-  RED.nodes.registerType('webdav-out', {
+  RED.nodes.registerType('webdav-read', {
     category: 'storage',
     color: '#0082c9',
-    paletteLabel: 'WebDAV out',
+    paletteLabel: 'read',
     defaults: {
       wname: {value: ''},
-      server: {type: 'dav-credentials', required: true},
+      server: {type: 'webdav-credentials', required: true},
       filename: {value: '', required: false},
       output: {value: 'binary', required: true}
     },
@@ -14,12 +14,12 @@
     outputLabels: ['stdout'],
     icon: 'nextcloud.png',
     label: function() {
-      return this.wname || 'WebDAV Out'
+      return this.wname || 'read'
     }
   })
 </script>
 
-<script type="text/x-red" data-template-name="webdav-out">
+<script type="text/x-red" data-template-name="webdav-read">
     <div class="form-row">
         <label for="node-input-wname"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-wname" placeholder="Name">
@@ -33,7 +33,7 @@
         <input type="text" id="node-input-filename">
     </div>
     <div class="form-row">
-        <label for="node-input-output"><i class="fa fa-sitemap"></i> Filename</label>
+        <label for="node-input-output"><i class="fa fa-type"></i> Type</label>
         <select type="text", id="node-input-output">
             <option value="binary">Binary</option>
             <option value="text">Text</option>
@@ -41,8 +41,8 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="webdav-out">
-	<p>Connects to a Nextcloud server and downloads a file and sends it to the output</p>
+<script type="text/x-red" data-help-name="webdav-read">
+	<p>Connects to a WebDAV server and downloads a file and sends it to the output</p>
 
 	<h3>Inputs</h3>
     <dl class="message-properties">
@@ -60,7 +60,7 @@
         <dt>payload
             <span class="property-type">Binary buffer</span>
         </dt>
-        <dd> Output payload is an binary buffer. The output can be connected to a file node and written
+        <dd> Output payload is an binary buffer or string, depends on type. The output can be connected to a file node and written
         to file system</dd>
     </dl>
 </script>

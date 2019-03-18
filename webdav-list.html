@@ -2,10 +2,10 @@
   RED.nodes.registerType('webdav-list', {
     category: 'storage',
     color: '#0082c9',
-    paletteLabel: 'WebDAV list',
+    paletteLabel: 'list',
     defaults: {
       wname: {value: ''},
-      server: {type: 'dav-credentials', required: true},
+      server: {type: 'webdav-credentials', required: true},
       directory: {value: '', required: false}
     },
     inputs: 1,
@@ -13,7 +13,7 @@
     outputLabels: ['stdout'],
     icon: 'nextcloud.png',
     label: function() {
-      return this.wname || 'WebDAV List'
+      return this.wname || 'list'
     }
   })
 </script>
@@ -34,7 +34,7 @@
 </script>
 
 <script type="text/x-red" data-help-name="webdav-list">
-	<p>Connects to a Nextcloud server and lists directory content of a given path)</p>
+	<p>Connects to a WebDAV server and lists directory content of a given path)</p>
 
 	<h3>Inputs</h3>
     <dl class="message-properties">

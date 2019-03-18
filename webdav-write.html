@@ -1,11 +1,11 @@
 <script type="text/javascript">
-  RED.nodes.registerType('webdav-in', {
+  RED.nodes.registerType('webdav-write', {
     category: 'storage',
     color: '#0082c9',
-    paletteLabel: 'WebDAV in',
+    paletteLabel: 'write',
     defaults: {
       uname: {value: ''},
-      server: {type: 'dav-credentials', required: true},
+      server: {type: 'webdav-credentials', required: true},
       filename: {value: '', required: false},
       overwrite: {value: '', required: false},
       format: {value: 'binary', required: true},
@@ -16,12 +16,12 @@
     outputLabels: ['stdout'],
     icon: 'nextcloud.png',
     label: function() {
-      return this.uname || 'WebDAV In'
+      return this.uname || 'write'
     }
   })
 </script>
 
-<script type="text/x-red" data-template-name="webdav-in">
+<script type="text/x-red" data-template-name="webdav-write">
     <div class="form-row">
         <label for="node-input-uname"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-uname" placeholder="Name">
@@ -55,19 +55,19 @@
     	be relative to the working directory of the Node-RED process.</div>
 </script>
 
-<script type="text/x-red" data-help-name="webdav-in">
-	<p>Connects to a Webdav server and uploads a file to a given directory</p>
+<script type="text/x-red" data-help-name="webdav-write">
+	<p>Connects to a WebDAV server and uploads a file to a given directory</p>
 
 	<h3>Inputs</h3>
     <dl class="message-properties">
         <dt>payload
             <span class="property-type">any</span>
         </dt>
-        <dd> Incoming message triggers receiving a list containing a directory content. Any payload
-        is possible. </dd>
-        <dt class="optional">filename <span class="property-type">string</span></dt>
-        <dd> The filename should be an absolute path, otherwise it will be relative to the working
-        directory of the Node-RED process.</dd>
+        <dd> Binary buffer with file data, need to set by msg. Use other node to read data from local filesystem </dd>
+        <dt>filename <span class="property-type">byte array</span></dt>
+        <dd> Named the file on WebDAV server. Config value will overwrite by msg.filename</dd>
+        <dt class="optional">overwrite</dt>
+        <dd> check if an existing file should be overwrite if it already exists</dd>
         <dt class="optional">directory <span class="property-type">string</span></dt>
         <dd> A directory can be specified on incoming message or in nodes properties. Uploads the
         file to the users root directory if not set.</dd>
@@ -75,13 +75,11 @@
 
 	<h3>Outputs</h3>
     <dl class="message-properties">
-        <dt>payload
-            <span class="property-type">Object</span>
+        <dt>status
+            <span class="property-type">number</span>
         </dt>
-        <dd> Output payload is an object </dd>
-        <dt class="optional">size <span class="property-type">number</span></dt>
-        <dd> Should be 0 in case of success </dd>
-		<dt class="optional">timeout <span class="property-type">number</span></dt>
-        <dd> Should be 0 in case of success</dd>
+        <dd> Status code of response, 204 if everything is ok </dd>
+        <dt> statusText <span class="property-type">string</span></dt>
+        <dd> Status text of response </dd>
     </dl>
 </script>

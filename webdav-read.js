@@ -46,5 +46,5 @@ module.exports = function (RED) {
         })
     })
   }
-  RED.nodes.registerType('webdav-out', WebDavOut)
+  RED.nodes.registerType('webdav-read', WebDavOut)
 }

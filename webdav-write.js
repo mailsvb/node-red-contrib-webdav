@@ -2,7 +2,7 @@ const { createClient } = require('webdav')
 const https = require('https')
 
 module.exports = function (RED) {
-  function WebDavIn (config) {
+  function WebDavWrite (config) {
     RED.nodes.createNode(this, config)
     this.server = RED.nodes.getNode(config.server)
     this.directory = config.directory
@@ -56,5 +56,5 @@ module.exports = function (RED) {
         })
     })
   }
-  RED.nodes.registerType('webdav-in', WebDavIn)
+  RED.nodes.registerType('webdav-write', WebDavWrite)
 }

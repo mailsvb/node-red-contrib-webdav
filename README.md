@@ -5,17 +5,7 @@ Collection of node-red nodes to download Calendars (CalDAV) and Contacts
 Detailed information can be found in the build in info of each node
 
 ## Installation
-npm install node-red-contrib-nextcloud
-
-### CalDAV
-- based on [dav](https://github.com/lambdabaa/dav) package using CalDAV protocol
-- reads all calendars and sends a message for each calendar
-- reads a specified calandar if set in node properties or incoming message
-
-### CardDAV
-- based on [dav](https://github.com/lambdabaa/dav) package using CalDAV protocol
-- reads all addressbooks and sends a message for each adressbook
-- reads a specified addressbook if set in node properties or incoming message
+npm install node-red-contrib-webdav
 
 ### WebDAV
 - based on [webdav](https://github.com/perry-mitchell/webdav-client) package using WebDAV protocol

@@ -40,5 +40,5 @@ module.exports = function (RED) {
     })
   }
 
-  RED.nodes.registerType('webdav-directory', WebDavDirectory)
+  RED.nodes.registerType('webdav-mkdir', WebDavDirectory)
 }
