@@ -1,11 +1,14 @@
 {
-  "name": "node-red-contrib-nextcloud",
-  "version": "0.1.1",
-  "description": "Collection of node-red nodes to download Calendars (CalDAV) and Contacts (CardDAV) and up- / download / list files (WebDAV) from / to nextcloud",
-  "main": "nextcloud.js",
+  "name": "node-red-node-webdav",
+  "version": "0.2.0",
+  "description": "Collection of node-red nodes to interact with WebDAV",
   "node-red": {
     "nodes": {
-      "Nextcloud": "nextcloud.js"
+      "davCredentials": "webdav-credentials.js",
+      "webdavIn": "webdav-write.js",
+      "webdavOut": "webdav-read.js",
+      "webdavList": "webdav-list.js",
+      "webdavDirectory": "webdav-mkdir.js"
     }
   },
   "keywords": [
@@ -20,7 +23,7 @@
     "dav": "^1.8.0",
     "ical-expander": "^2.0.0",
     "moment": "^2.22.2",
-    "webdav": "^1.6.1"
+    "webdav": "^2.5.0"
   },
   "devDependencies": {
     "eslint": "^5.6.0",
@@ -33,17 +36,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Torsten Kühnel",
+  "author": "Wolfgang Rathgeb",
   "license": "MIT",
   "maintainers": [
     {
-      "name": "Torsten Kühnel",
-      "email": "kuehnel.github@gmail.com"
+      "name": "Wolfgang Rathgeb",
+      "email": "W.Rathgeb@dropanote.de"
     }
   ],
   "readme": "README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kuehnelbs/node-red-contrib-nextcloud"
+    "url": "https://github.com/cordlesswool/node-red-node-webdav"
   }
 }
