@@ -32,7 +32,7 @@ module.exports = function (RED) {
         format: node.output
       }
       if (node.server.insecure) {
-        option.httpsAgend = new https.Agent({ rejectUnauthorized: false })
+        option.httpsAgent = new https.Agent({ rejectUnauthorized: false })
       }
       client.getFileContents(filename, option)
         .then(function (contents) {
