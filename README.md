@@ -1,4 +1,7 @@
 # node-red-contrib-nextcloud
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/CordlessWool/node-red-node-webdav.svg)](https://greenkeeper.io/)
+
 Collection of node-red nodes to download Calendars (CalDAV) and Contacts
 (CardDAV) and up- / download / list files (WebDAV) from / to [nextcloud](https://nextcloud.com/)
 
