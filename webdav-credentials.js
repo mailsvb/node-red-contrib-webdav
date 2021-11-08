@@ -1,7 +1,7 @@
 module.exports = function (RED) {
   function WebdavConfigNode (config) {
     RED.nodes.createNode(this, config)
-    this.address = config.url
+    this.url = config.url
     this.insecure = config.insecure
   }
 

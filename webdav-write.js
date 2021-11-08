@@ -36,7 +36,7 @@ module.exports = function (RED) {
                 options.overwrite = true
             }
 
-            client.putFileContents(directory + name, msg.payload, options)
+            client.putFileContents(path.join(directory, filename), msg.payload, options)
             .then(function (content) {
                 node.send(Object.assign({}, msg, { status: content.status, statusText: content.statusText }))
             }).catch(function (error) {
