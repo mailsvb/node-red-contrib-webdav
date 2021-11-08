@@ -5,7 +5,7 @@
   "node-red": {
     "nodes": {
       "davCredentials": "webdav-credentials.js",
-      "webdavWrite": "webdav-write.js",
+      "webdavWrite": "webdav-write.js"
     }
   },
   "keywords": [
