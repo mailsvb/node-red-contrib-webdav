@@ -1,44 +1,38 @@
 const { createClient } = require('webdav')
-// const fs = require('fs')
+const path = require('path')
 const https = require('https')
 
 module.exports = function (RED) {
-  function WebDavDirectory (config) {
-    RED.nodes.createNode(this, config)
-    this.server = RED.nodes.getNode(config.server)
-    this.directory = config.directory
-    const node = this
+    function WebDavDirectory (config) {
+        RED.nodes.createNode(this, config)
+        const node = this
+        node.server = RED.nodes.getNode(config.server)
+        node.directory = config.directory
 
-    node.on('input', (msg) => {
-      const webDavUri = node.server.address
-      const client = createClient(webDavUri, {
-        username: node.server.credentials.user,
-        password: node.server.credentials.pass
-      })
-      let directory = ''
-      if (msg.directory) {
-        directory = '/' + msg.directory
-      } else if (node.directory && node.directory.length) {
-        directory = '/' + node.directory
-      }
-      directory = directory.replace('//', '/')
+        node.on('input', (msg) => {
+            // directory
+            const directory = path.join('/', msg.directory ? msg.directory : node.directory)
 
-      // check option for self signed certs
-      const option = {}
-      if (node.server.insecure) {
-        option.httpsAgent = new https.Agent({ rejectUnauthorized: false })
-      }
-      client.createDirectory(directory, option)
-        .then(function (contents) {
-          node.send({
-            ...msg,
-            'payload': contents
-          })
-        }).catch(function (error) {
-          node.error(error.toString(), msg)
+            const webDavUrl = node.server.url
+            const client = createClient(webDavUrl, {
+                username: node.server.credentials.user,
+                password: node.server.credentials.pass
+            })
+
+            // options
+            const options = {}
+            if (node.server.insecure) {
+                options.httpsAgent = new https.Agent({ rejectUnauthorized: false })
+            }
+
+            client.createDirectory(directory, options)
+            .then(function (content) {
+                node.send(Object.assign({}, msg, { payload: content }))
+            }).catch(function (error) {
+                node.error(error.toString(), msg)
+            })
         })
-    })
-  }
+    }
 
-  RED.nodes.registerType('webdav-mkdir', WebDavDirectory)
+    RED.nodes.registerType('webdav-mkdir', WebDavDirectory)
 }

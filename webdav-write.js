@@ -21,11 +21,11 @@ module.exports = function (RED) {
 
             const webDavUrl = node.server.url
             const client = createClient(webDavUrl, {
-            username: node.server.credentials.user,
+                username: node.server.credentials.user,
                 password: node.server.credentials.pass
             })
 
-            // check option for self signed certs
+            // options
             const options = {
                 format: node.format
             }
