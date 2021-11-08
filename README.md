@@ -1,9 +1,6 @@
 # node-red-contrib-webdav
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/CordlessWool/node-red-node-webdav.svg)](https://greenkeeper.io/)
-
 Collection of node-red nodes to upload / download / list files (WebDAV) from / to [nextcloud](https://nextcloud.com/)
-
 Detailed information can be found in the build in info of each node
 
 ## Installation
