@@ -1,37 +1,21 @@
 {
-  "name": "node-red-node-webdav",
-  "version": "0.2.0",
+  "name": "node-red-contrib-webdav",
+  "version": "0.9.9",
   "description": "Collection of node-red nodes to interact with WebDAV",
   "node-red": {
     "nodes": {
       "davCredentials": "webdav-credentials.js",
-      "webdavIn": "webdav-write.js",
-      "webdavOut": "webdav-read.js",
-      "webdavList": "webdav-list.js",
-      "webdavDirectory": "webdav-mkdir.js"
+      "webdavWrite": "webdav-write.js",
     }
   },
   "keywords": [
     "node-red",
     "nextcloud",
     "owncloud",
-    "webdav",
-    "caldav",
-    "carddav"
+    "webdav"
   ],
   "dependencies": {
-    "dav": "^1.8.0",
-    "ical-expander": "^2.0.0",
-    "moment": "^2.22.2",
-    "webdav": "^2.5.0"
-  },
-  "devDependencies": {
-    "eslint": "^6.4.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "webdav": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -47,6 +31,6 @@
   "readme": "README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cordlesswool/node-red-node-webdav"
+    "url": "https://github.com/mailsvb/node-red-contrib-webdav"
   }
 }
